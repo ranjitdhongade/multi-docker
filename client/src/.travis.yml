@@ -1,0 +1,22 @@
+sudo: required
+services:
+  - docker
+
+before_install:
+  - docker build -t ranjit/react-test -f ./client/Dockerfile.dev ./client/Dockerfile.dev ./client
+
+script:
+  - docker run ranjit/react-test npm test -- --coverage
+
+after_success:
+  - docker build -t ranjit/multi-client ./client
+  - docker build -t ranjit/multi-nginx ./nginx
+  - docker build -t ranjit/multi-server ./server
+  - docker build -t ranjit/multi-worker ./worker
+  #Log in to the docker CLI
+  echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  #Take those images and push them to docker hub
+  - docker push ranjit/multi-client
+  - docker push ranjit/multi-nginx
+  - docker push ranjit/multi-server
+  - docker push ranjit/multi-worker

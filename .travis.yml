@@ -6,20 +6,20 @@ services:
   - docker
 
 before_install:
-  - docker build -t ranjit/react-test -f ./client/Dockerfile.dev ./client
+  - docker build -t jeet229/react-test -f ./client/Dockerfile.dev ./client
 
 script:
-  - docker run ranjit/react-test npm test -- --coverage
+  - docker run jeet229/react-test npm test -- --coverage
 
 after_success:
-  - docker build -t ranjit/multi-client ./client
-  - docker build -t ranjit/multi-nginx ./nginx
-  - docker build -t ranjit/multi-server ./server
-  - docker build -t ranjit/multi-worker ./worker
+  - docker build -t jeet229/multi-client ./client
+  - docker build -t jeet229/multi-nginx ./nginx
+  - docker build -t jeet229/multi-server ./server
+  - docker build -t jeet229/multi-worker ./worker
   #Log in to the docker CLI
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   #Take those images and push them to docker hub
-  - docker push ranjit/multi-client
-  - docker push ranjit/multi-nginx
-  - docker push ranjit/multi-server
-  - docker push ranjit/multi-worker
+  - docker push jeet229/multi-client
+  - docker push jeet229/multi-nginx
+  - docker push jeet229/multi-server
+  - docker push jeet229/multi-worker

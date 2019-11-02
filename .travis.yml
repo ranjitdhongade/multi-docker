@@ -17,7 +17,7 @@ after_success:
   - docker build -t ranjit/multi-server ./server
   - docker build -t ranjit/multi-worker ./worker
   #Log in to the docker CLI
-  echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   #Take those images and push them to docker hub
   - docker push ranjit/multi-client
   - docker push ranjit/multi-nginx
